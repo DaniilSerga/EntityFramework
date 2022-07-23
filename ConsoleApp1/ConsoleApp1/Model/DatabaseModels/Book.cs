@@ -16,12 +16,12 @@ namespace ConsoleApp1.Model.DatabaseModels
 
         public int CountryId { get; set; }
 
-        public int? TimePeriodId { get; set; }
+        public int GenreId { get; set; }
 
         public Author Author { get; set; }
 
         public Country Country { get; set; }
 
-        public TimePeriod? TimePeriod { get; set; }
+        public Genre Genre { get; set; }
     }
 }

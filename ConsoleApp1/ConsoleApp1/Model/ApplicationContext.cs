@@ -25,6 +25,6 @@ namespace ConsoleApp1.Model
         public DbSet<Position> Positions { get; set; }
         public DbSet<SaleRegistration> SaleRegistations { get; set; }
         public DbSet<Store> Stores { get; set; }
-        public DbSet<TimePeriod> TimePeriods { get; set; }
+        public DbSet<Genre> Genres { get; set; }
     }
 }

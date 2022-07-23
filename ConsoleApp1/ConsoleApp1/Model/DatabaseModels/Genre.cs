@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Model.DatabaseModels
 {
-    internal class TimePeriod
+    internal class Genre
     {
+        public int Id { get; set; } 
+
+        public string Name { get; set; }
     }
 }
