@@ -15,6 +15,8 @@ namespace ConsoleApp1.Model
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=BookstoreChain;Trusted_Connection=True;");
         }
 
+        public virtual DbSet<SPResult> SpResults { get; set; }
+
         #region Properties
         public DbSet<Author> Authors { get; set; } = null!;
         public DbSet<Book> Books { get; set; } = null!;

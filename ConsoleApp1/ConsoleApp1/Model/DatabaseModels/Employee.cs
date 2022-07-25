@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsoleApp1.Model.DatabaseModels
 {
-    [Table("Employee")]
+    [Table("Employees")]
     internal class Employee : Person
     {
         public decimal Salary { get; set; }

@@ -2,10 +2,11 @@
 using ConsoleApp1.Model;
 using Microsoft.EntityFrameworkCore;
 
+/*
 using (ApplicationContext db = new ApplicationContext())
 {
-    List<Author> authors = new() 
-    { 
+    List<Author> authors = new()
+    {
         new Author { Name = "Александр Сергеевич Пушкин" },
         new Author { Name = "Евгений Алексеевич Гришаев"},
         new Author { Name = "Булгаков Михаил Афанасьевич"}
@@ -73,7 +74,9 @@ using (ApplicationContext db = new ApplicationContext())
 
     db.SaveChanges();
 }
+*/
 
+// Using INCLUDE
 using (ApplicationContext db = new ApplicationContext())
 {
     var books = db.Books
@@ -85,3 +88,19 @@ using (ApplicationContext db = new ApplicationContext())
         Console.WriteLine($"{book.Id}. {book.Name}, {book.Country.Id} ({book.Country.Name})");
     }
 }
+
+// Executing Stored Procedures
+using (ApplicationContext db = new ApplicationContext())
+{
+    decimal salary = 500.00M;
+
+    var employees = db.SpResults
+        .FromSqlInterpolated($"exec [dbo].[SelectEmployeeBySalary] @Salary={salary}");
+
+    /* Result
+     * 3000.00 Володько Людвик Павлович +375331543520
+     * 3000.00 Пигаль Анастасия Сергеевна +375334862211
+     */
+}
+
+
