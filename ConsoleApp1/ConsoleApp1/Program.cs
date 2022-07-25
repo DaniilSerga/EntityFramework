@@ -1,62 +1,63 @@
 ﻿using ConsoleApp1.Model.DatabaseModels;
 using ConsoleApp1.Model;
+using Microsoft.EntityFrameworkCore;
 
 using (ApplicationContext db = new ApplicationContext())
 {
-    List<Author> authors = new List<Author> 
+    List<Author> authors = new() 
     { 
         new Author { Name = "Александр Сергеевич Пушкин" },
         new Author { Name = "Евгений Алексеевич Гришаев"},
         new Author { Name = "Булгаков Михаил Афанасьевич"}
     };
-    List<Country> countries = new List<Country>
+    List<Country> countries = new()
     {
         new Country { Name = "Россия"},
         new Country { Name = "США"}
     };
-    List<Genre> genres = new List<Genre>
+    List<Genre> genres = new()
     {
         new Genre { Name = "Приключения"},
         new Genre { Name = "Роман"},
         new Genre { Name = "Драма"}
     };
-    List<Book> books = new List<Book>
+    List<Book> books = new()
     {
-        new Book { Name = "Собачье сердце", AuthorId = 3, CountryId = 1, GenreId = 3},
-        new Book { Name = "Евгений Онегин", AuthorId = 1, CountryId = 1, GenreId = 2},
-        new Book { Name = "Узник чёрного камня", AuthorId = 2, CountryId = 1, GenreId = 1}
+        new Book { Name = "Собачье сердце", Author = authors[2], Country = countries[0], Genre = genres[2]},
+        new Book { Name = "Евгений Онегин", Author = authors[0], Country = countries[0], Genre = genres[1]},
+        new Book { Name = "Узник чёрного камня",  Author = authors[1], Country = countries[0], Genre = genres[0]}
     };
-    List<Customer> customers = new List<Customer>
+    List<Customer> customers = new()
     {
-        new Customer { Name = "Серга Даниил Денисович", MobilePhone = "+375291731104"},
-        new Customer { Name = "Новик Илья Витальевич", MobilePhone = "+375296891695"}
+        new Customer { Name = "СергаДаниил Денисович", MobilePhone = "+375291731104"},
+        new Customer { Name = "НовикИлья Витальевич", MobilePhone = "+375296891695"}
     };
-    List<Position> positions = new List<Position>
+    List<Position> positions = new()
     {
-        new Position { Name = "Менеджер"},
-        new Position { Name =  "Директор"}
+        new Position { Name = "Менедер"},
+        new Position { Name =  "Диретор"}
     };
-    List<Employee> employees = new List<Employee>
-    {
-        new Employee { Name = "Володько Людвик Павлович", MobilePhone="+375331543520", PositionId=2, Salary=3000},
-        new Employee { Name = "Пигаль Анастасия Сергеевна", MobilePhone="+375334862211", PositionId=1, Salary=3000},
-    };
-    List<SaleRegistration> sales = new List<SaleRegistration>
-    {
-        new SaleRegistration { BookId = 1, CustomerId = 1, EmployeeId = 2, SaleDate = DateTime.Now },
-        new SaleRegistration { BookId = 3, CustomerId = 2, EmployeeId = 1, SaleDate = new DateTime(2022, 7, 22) },
-    };
-    List<City> cities = new List<City>
+    List<City> cities = new()
     {
         new City { Name = "Пинск"},
         new City { Name = "Минск"},
         new City { Name = "Брест"},
     };
-    List<Store> stores = new List<Store>
+    List<Store> stores = new()
     {
-        new Store { CityId = 1, Name = "Пинский книжник"},
-        new Store { CityId = 2, Name = "Минский книжник"},
-        new Store { CityId = 3, Name = "Брестский книжник"},
+        new Store { Cities = new List<City> { cities[0] }, Name = "Пинский книжник"},
+        new Store { Cities = new List<City> { cities[1] }, Name = "Минский книжник"},
+        new Store { Cities = new List<City> { cities[2] }, Name = "Брестский книжник"},
+    };
+    List<Employee> employees = new()
+    {
+        new Employee { Name = "Володько Людвик Павлович", MobilePhone="+375331543520", Position = positions[1], Salary=3000, StoreId = 1},
+        new Employee { Name = "Пигаль Анастасия Сергеевна", MobilePhone="+375334862211", Position = positions[0], Salary=3000, StoreId = 2},
+    };
+    List<SaleRegistration> sales = new()
+    {
+        new SaleRegistration { BookId = 1, Customer = customers[0], Employee = employees[0], SaleDate = DateTime.Now },
+        new SaleRegistration { BookId = 2, Customer = customers[1], Employee = employees[1], SaleDate = new DateTime(2022, 7, 22) },
     };
 
     db.Authors.AddRange(authors);
@@ -65,15 +66,22 @@ using (ApplicationContext db = new ApplicationContext())
     db.Books.AddRange(books);
     db.Customers.AddRange(customers);
     db.Positions.AddRange(positions);
-    db.Employees.AddRange(employees);
-    db.SaleRegistations.AddRange(sales);
     db.Cities.AddRange(cities);
     db.Stores.AddRange(stores);
+    db.Employees.AddRange(employees);
+    db.SaleRegistations.AddRange(sales);
 
     db.SaveChanges();
 }
 
 using (ApplicationContext db = new ApplicationContext())
 {
+    var books = db.Books
+        .Include(u => u.Country)
+        .ToList();
 
+    foreach (Book book in books)
+    {
+        Console.WriteLine($"{book.Id}. {book.Name}, {book.Country.Id} ({book.Country.Name})");
+    }
 }

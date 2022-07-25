@@ -7,7 +7,6 @@ namespace ConsoleApp1.Model
     {
         public ApplicationContext()
         {
-            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -16,15 +15,17 @@ namespace ConsoleApp1.Model
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=BookstoreChain;Trusted_Connection=True;");
         }
 
-        public DbSet<Author> Authors { get; set; }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Country>  Countries { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Position> Positions { get; set; }
-        public DbSet<SaleRegistration> SaleRegistations { get; set; }
-        public DbSet<Store> Stores { get; set; }
-        public DbSet<Genre> Genres { get; set; }
+        #region Properties
+        public DbSet<Author> Authors { get; set; } = null!;
+        public DbSet<Book> Books { get; set; } = null!;
+        public DbSet<City> Cities { get; set; } = null!;
+        public DbSet<Country> Countries { get; set; } = null!;
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<Employee> Employees { get; set; } = null!;
+        public DbSet<Position> Positions { get; set; } = null!;
+        public DbSet<SaleRegistration> SaleRegistations { get; set; } = null!;
+        public DbSet<Store> Stores { get; set; } = null!;
+        public DbSet<Genre> Genres { get; set; } = null!;
+        #endregion
     }
 }

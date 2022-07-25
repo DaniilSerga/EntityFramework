@@ -10,12 +10,14 @@ namespace ConsoleApp1.Model.DatabaseModels
     [Table("Employee")]
     internal class Employee : Person
     {
-        public string MobilePhone { get; set; }
+        public decimal Salary { get; set; }
 
         public int PositionId { get; set; }
 
-        public decimal Salary { get; set; }
+        public int StoreId { get; set; }
 
-        public Position Position { get; set; }
+        public Position Position { get; set; } = null!;
+
+        public Store? Store { get; set; }
     }
 }

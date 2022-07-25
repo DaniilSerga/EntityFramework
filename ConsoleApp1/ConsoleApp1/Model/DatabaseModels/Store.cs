@@ -10,10 +10,10 @@ namespace ConsoleApp1.Model.DatabaseModels
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public int CityId { get; set; }
+        public List<City> Cities { get; set; } = new();
 
-        public City City { get; set; }
+        public List<Employee> Employees { get; set; } = new();
     }
 }

@@ -10,6 +10,6 @@ namespace ConsoleApp1.Model.DatabaseModels
     [Table("Customer")]
     internal class Customer : Person
     {
-        public string? MobilePhone { get; set; }
+        public SaleRegistration Sale { get; set; } = null!;
     }
 }

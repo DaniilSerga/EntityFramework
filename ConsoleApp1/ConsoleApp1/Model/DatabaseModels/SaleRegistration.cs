@@ -18,7 +18,7 @@ namespace ConsoleApp1.Model.DatabaseModels
 
         public int EmployeeId { get; set; }
 
-        public Book Book { get; set; }
+        public List<Book> Books { get; set; }
         public Customer Customer { get; set; }
         public Employee Employee { get; set; }
     }
