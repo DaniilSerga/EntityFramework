@@ -2,7 +2,6 @@
 using ConsoleApp1.Model;
 using Microsoft.EntityFrameworkCore;
 
-/*
 using (ApplicationContext db = new ApplicationContext())
 {
     List<Author> authors = new()
@@ -74,7 +73,6 @@ using (ApplicationContext db = new ApplicationContext())
 
     db.SaveChanges();
 }
-*/
 
 // Using INCLUDE
 using (ApplicationContext db = new ApplicationContext())
@@ -94,13 +92,25 @@ using (ApplicationContext db = new ApplicationContext())
 {
     decimal salary = 500.00M;
 
-    var employees = db.SpResults
-        .FromSqlInterpolated($"exec [dbo].[SelectEmployeeBySalary] @Salary={salary}");
-
     /* Result
      * 3000.00 Володько Людвик Павлович +375331543520
      * 3000.00 Пигаль Анастасия Сергеевна +375334862211
      */
+    var employees = db.SpResults
+        .FromSqlInterpolated($"exec [dbo].[SelectEmployeeBySalary] @Salary={salary}");
 }
 
+// Created view and read info from it
+using (ApplicationContext db = new ApplicationContext())
+{
+    db.Database.ExecuteSqlRaw(@"CREATE VIEW View_StoreInfo AS 
+                                            SELECT s.Name AS StoreName, c.Name AS City FROM Stores s
+                                            INNER JOIN Cities c on c.Id = s.Id");
 
+    var storeInfo = db.StoreInfo.ToList();
+
+    foreach (var item in storeInfo)
+    {
+        Console.WriteLine($"Store: {item.StoreName}, {item.City}");
+    }
+}

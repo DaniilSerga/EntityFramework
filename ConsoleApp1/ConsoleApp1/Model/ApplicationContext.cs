@@ -15,6 +15,15 @@ namespace ConsoleApp1.Model
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=BookstoreChain;Trusted_Connection=True;");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StoreGroup>(pc =>
+            {
+                pc.HasNoKey();
+                pc.ToView("View_StoreInfo");
+            });
+        }
+
         public virtual DbSet<SPResult> SpResults { get; set; }
 
         #region Properties
@@ -28,6 +37,7 @@ namespace ConsoleApp1.Model
         public DbSet<SaleRegistration> SaleRegistations { get; set; } = null!;
         public DbSet<Store> Stores { get; set; } = null!;
         public DbSet<Genre> Genres { get; set; } = null!;
+        public DbSet<StoreGroup> StoreInfo { get; set; } = null!;
         #endregion
     }
 }
